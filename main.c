@@ -7,18 +7,18 @@
 int main(int argc, char *argv[]) {
 	Category category[50];
 	Product product01[50]={
-		{1,"ao len",12,120000},
-		{1,"ao am",13,150000},
+	{1,2,"banh mi",12,12000},
+	{2,2,"ngo",12,12000},
 	};
 	int choice,location;
 	int count=-1;
-	char *filename="category.dat";
+	const char *filename="category.dat";
 	int n= loadCategory(filename , category);
-	int nProduct=2;
+	int productCount=2; 
 	do{
 		system("cls");
 		printMenu();
-		printf("moi nhap lua chon: ");
+		printf("Moi nhap lua chon: ");
 		scanf("%d",&choice);
 		switch(choice){
 			// quan ly danh muc
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 				do{
 					system("cls");
 					printFunction();
-					printf("moi nhap lua chon: ");
+					printf("Moi nhap lua chon: ");
 					scanf("%d",&choice);
 					switch(choice){
 						// hien thi danh muc
@@ -96,10 +96,10 @@ int main(int argc, char *argv[]) {
 						// thoat chuong trinh
 						case 7:{
 							system("cls");
-							printf("thoat chuong trinh");
+							printf("Thoat chuong trinh");
 							break;
 						default:
-							printf("moi chon lai: \n");
+							printf("Moi chon lai: \n");
 						}
 					}
 				}while(choice!=7);
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 				switch(choice){
 					case 1:{
 						system("cls");
-		                printProduct(product01, nProduct);
+		                printProduct(product01, productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -124,7 +124,9 @@ int main(int argc, char *argv[]) {
 					}	            			           
 		            case 2:{
 		            	system("cls");
-		                addProduct(product01, &nProduct);
+		            	printf("  ***______San Pham____***\n");
+						printProduct(product01, productCount);
+		                addProduct(product01, &productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -132,7 +134,9 @@ int main(int argc, char *argv[]) {
 					}
 		            case 3:{
 		            	system("cls");
-		                fixProduct(product01, nProduct);
+		            	printf("  ***______San Pham____***\n");
+						printProduct(product01, productCount);
+		                fixProduct(product01, productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -140,7 +144,9 @@ int main(int argc, char *argv[]) {
 					}
 		            case 4:{
 		            	system("cls");
-		                deleteProduct(product01, &nProduct);
+		            	printf("  ***______San Pham____***\n");
+						printProduct(product01, productCount);
+		                deleteProduct(product01, &productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -148,7 +154,7 @@ int main(int argc, char *argv[]) {
 					}
 		            case 5:{
 		            	system("cls");
-		                searchProduct(product01, nProduct);
+		                searchProduct(product01, productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -156,7 +162,7 @@ int main(int argc, char *argv[]) {
 					}		                
 		            case 6:{
 		            	system("cls");
-		                sortProduct(product01, nProduct);
+		                sortProduct(product01, productCount);
 		                printf("Go Back(b): ");
 		                getchar();
 		                getchar();
@@ -168,6 +174,8 @@ int main(int argc, char *argv[]) {
 					}
 		       	}
 				}while(choice!=7);	
+				break;
+			}	
 			case 3:{
 				printf("thoat chuong trinh");
 							break;
@@ -175,7 +183,6 @@ int main(int argc, char *argv[]) {
 							printf("moi chon lai \n");
 				break;
 			}
-		}
 		}
 	}while(choice!=3);
 	return 0;

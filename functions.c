@@ -4,7 +4,7 @@
 //logic ham
 void printMenu(){
 	printf("\n");
-	printf("|=============================| \n");
+	printf("|-----------------------------| \n");
 	printf("| ***___STORE MANAGEMENT___***| \n");
 	printf("|-----------------------------| \n");
 	printf("|1.Quan ly danh muc           | \n");
@@ -12,7 +12,7 @@ void printMenu(){
 	printf("|2.Quan ly san pham           | \n");
 	printf("|-----------------------------| \n");
 	printf("|3.Thoat                      | \n");
-	printf("|=============================| \n");
+	printf("|-----------------------------| \n");
 }
 void printFunction(){
 	printf("\n");
@@ -35,11 +35,13 @@ void printFunction(){
 }
 // in danh muc
 void printCategory(Category category[],int n){
-	printf("|___|______________________|\n");
+	printf("____________________________ \n");
+	printf("| ID|TEN                   |\n");
+	printf("|---|----------------------| \n");
 	int i;
 	for(i=0;i<n;i++) {
-		printf("| %d |%s                    \n",category[i].id,category[i].nameCategory);
-		printf("|___|______________________|\n");
+		printf("|% -2d |%-21s |\n",category[i].id,category[i].nameCategory);
+		printf("|---|----------------------| \n");
 	}
 }
 // kiem tra ten trung hay ko
@@ -61,7 +63,7 @@ void addCategory(Category category[], int *n) {
     	return;
 	}
 	int newId;
-	printf("moi nhap ID cho danh muc moi: ");
+	printf("Moi nhap ID cho danh muc moi: ");
 	scanf("%d",&newId);
 	int i;
 	for(i=0;i<*n;i++){
@@ -72,17 +74,17 @@ void addCategory(Category category[], int *n) {
 	}
 	char newName[50];
 	fflush(stdin);
-	printf("moi nhap ten cho danh muc moi: ");
+	printf("Moi nhap ten cho danh muc moi: ");
 	fgets(newName,50,stdin);
 	newName[strcspn(newName,"\n")]='\0';
 	if(checkName(category,*n,newName)){
-		printf("ten da ton tai\n");
+		printf("Ten da ton tai\n");
 		return;
 	}
 	category[*n].id=newId;
 	strcpy(category[*n].nameCategory,newName);
 	(*n)++;
-	printf("them thanh cong\n");
+	printf("Them thanh cong\n");
 	printf("Danh muc da duoc them vao file \n");
 
 }
@@ -138,7 +140,7 @@ void deleteCategory(Category category[], int *n){
 		}
 	}
 	if(!found){
-		printf("ko tim thay ID\n");
+		printf("ko tim thay ID");
 	}
 }
 // tim kiem danh muc
@@ -150,11 +152,12 @@ void searchCategory(Category category[], int n){
 	fgets(keyword,50,stdin);
 	keyword[strcspn(keyword,"\n")]='\0';
 	printf("ket qua tim kiem: \n");
-	printf("|___|______________________|\n");
 	int i;
 	for(i=0;i<n;i++){
 		if(strstr(category[i].nameCategory,keyword)!=NULL){
-			printf("| %d | %s\n", category[i].id, category[i].nameCategory);
+			printf("| ID|TEN                   |\n");
+			printf("|___|______________________|\n");
+			printf("| %-2d| %-21s|\n", category[i].id, category[i].nameCategory);
             printf("|___|______________________|\n");
             found = 1;
 		}
@@ -166,29 +169,29 @@ void searchCategory(Category category[], int n){
 // sap xep danh muc
 void sortCategory(Category category[],int n){
 	int a;
-		system("cls");
-		printf("[1]. sap xep A-Z\n");
-		printf("[2]. sap xep Z-A\n");
-		printf("moi chon: ");
-		scanf("%d",&a);
-		system("cls");
-					int i,j;
-					for(i=0;i<n-1;i++){
-						for(j=i+1;j<n;j++){
-							if((a==1&&strcmp(category[i].nameCategory,category[j].nameCategory)>0)||(a==2&&strcmp(category[i].nameCategory,category[j].nameCategory)<0)){
-								Category temp=category[i];
-								category[i]=category[j];
-								category[j]=temp;
-							}
-						}
-					}
-					printf("  ***______Danh muc____***\n");
-					printCategory(category,n);
-					printf("Danh muc da duoc them vao file \n");	
+	system("cls");
+	printf("[1]. sap xep A-Z\n");
+	printf("[2]. sap xep Z-A\n");
+	printf("moi chon: ");
+	scanf("%d",&a);
+	system("cls");
+	int i,j;
+	for(i=0;i<n-1;i++){
+		for(j=i+1;j<n;j++){
+			if((a==1&&strcmp(category[i].nameCategory,category[j].nameCategory)>0)||(a==2&&strcmp(category[i].nameCategory,category[j].nameCategory)<0)){
+				Category temp=category[i];
+				category[i]=category[j];
+				category[j]=temp;
+			}
+		}
+	}
+		printf("  ***______Danh muc____***\n");
+		printCategory(category,n);
+		printf("Danh muc da duoc them vao file \n");
 }
 // mo file
 int loadCategory(const char *filename, Category category[]){
-	FILE *file =fopen (filename,"r");
+	FILE *file =fopen (filename,"rb");
 	if(!file){
 		printf("khong the mo file");
 		return 0;
@@ -201,7 +204,7 @@ int loadCategory(const char *filename, Category category[]){
 	return n;
 }
 // luu file
-void saveCategory( const char *filename, Category category[],int n){
+void saveCategory(const char *filename, Category category[],int n){
 	FILE *file =fopen (filename,"wb");
 	if(!file){
 		printf("khong the mo file");
@@ -209,14 +212,14 @@ void saveCategory( const char *filename, Category category[],int n){
 	}
 	int i;
 	for(i=0;i<n;i++){
-		fwrite(file, "%d %s\n", category[i].id, category[i].nameCategory);
+		fprintf(file, "%d %s\n", category[i].id, category[i].nameCategory); 
 	}
 	fclose(file);
 }
 void printProductMenu() {
     printf("\n");
     printf("***____Quan ly san pham____***\n");
-    printf("|=============================|\n");
+    printf("|-----------------------------|\n");
     printf("|1. Hien thi san pham         |\n");
     printf("|-----------------------------|\n");
     printf("|2. Them san pham             |\n");
@@ -230,16 +233,16 @@ void printProductMenu() {
     printf("|6. Sap xep san pham          |\n");
     printf("|-----------------------------|\n");
     printf("|7. Thoat                     |\n");
-    printf("|=============================|\n");
+	printf("|-----------------------------|\n");
 }
 void printProduct(Product product01[], int n) {
-    printf("| ID  | Ten san pham | So luong | Gia tien |\n");
-    printf("|----------------------------------------|\n");
+    printf("|Product ID|Category ID| Name Product     | So luong | Gia tien   |\n");
+    printf("|-----------------------------------------------------------------|\n");
     int i;
     for (i = 0; i < n; i++) {
-        printf("| %d   | %s   | %d       | %d VND  |\n", product01[i].id, product01[i].nameProduct, product01[i].quantity, product01[i].price);
+        printf("|%-10d| %-10d| %-10s       | %-5d    | %-6d VND |\n", product01[i].id,product01[i].idCategory ,product01[i].nameProduct, product01[i].quantity, product01[i].price);
+        printf("|-----------------------------------------------------------------|\n");
     }
-    printf("|----------------------------------------|\n");
 }
 int checkProductName(Product product[], int n, char *name) {
 	int i;
@@ -265,6 +268,9 @@ void addProduct(Product product01[], int *n) {
             return;
         }
     }
+    int newIdCategory; 
+    printf("Moi bn nhap Id danh muc: ");
+    scanf("%d",&newIdCategory);
     char newName[50];
     fflush(stdin);
     printf("Moi nhap ten cho san pham moi: ");
@@ -281,6 +287,7 @@ void addProduct(Product product01[], int *n) {
     printf("Moi nhap gia tien: ");
     scanf("%d", &price);
     product01[*n].id = newId;
+    product01[*n].idCategory=newIdCategory;
     strcpy(product01[*n].nameProduct, newName);
     product01[*n].quantity = quantity;
     product01[*n].price = price;
@@ -303,6 +310,9 @@ void fixProduct(Product product01[], int n) {
         printf("ID khong hop le\n");
         return;
     }
+    int newIdCategory;
+	printf("Moi nhap ID danh muc muon sua: ");
+    scanf("%d", &newIdCategory);
     char newName[50];
     fflush(stdin);
     printf("Moi nhap ten moi cho san pham: ");
@@ -317,6 +327,7 @@ void fixProduct(Product product01[], int n) {
     scanf("%d", &newQuantity);
     printf("Moi nhap gia tien moi: ");
     scanf("%d", &newPrice);
+    product01[index].idCategory = newIdCategory;
     strcpy(product01[index].nameProduct, newName);
     product01[index].quantity = newQuantity;
     product01[index].price = newPrice;
@@ -356,8 +367,10 @@ void searchProduct(Product product01[], int n) {
     int i;
 	for (i = 0; i < n; i++) {
         if (strstr(product01[i].nameProduct, keyword) != NULL) {
-            printf("| %d | %s | %d | %d VND\n", product01[i].id, product01[i].nameProduct, product01[i].quantity, product01[i].price);
-            found = 1;
+            printf("|Product ID|Category ID| Name Product     | So luong | Gia tien   |\n");
+			printf("| %-8d |%-10d | %-16s | %8d | %7d VND|\n", product01[i].id,product01[i].idCategory, product01[i].nameProduct, product01[i].quantity, product01[i].price);
+            printf("|-----------------------------------------------------------------|\n");
+			found = 1;
         }
     }
     if (!found) {
@@ -366,15 +379,15 @@ void searchProduct(Product product01[], int n) {
 }
 void sortProduct(Product product01[], int n) {
     int choice;
-    printf("[1] Sap xep A-Z\n");
-    printf("[2] Sap xep Z-A\n");
+    printf("[1] Sap xep giam dan\n");
+    printf("[2] Sap xep tang dan\n");
     printf("Moi ban chon: ");
     scanf("%d", &choice);
     int i,j;
 	for ( i = 0; i < n - 1; i++) {
         for ( j = i + 1; j < n; j++) {
-            if ((choice == 1 && strcmp(product01[i].nameProduct, product01[j].nameProduct) > 0) ||
-                (choice == 2 && strcmp(product01[i].nameProduct, product01[j].nameProduct) < 0)) {
+            if ((choice == 1 && product01[i].idCategory>product01[j].idCategory) ||
+                (choice == 2 && product01[i].idCategory<product01[j].idCategory)) {
                 Product temp = product01[i];
                 product01[i] = product01[j];
                 product01[j] = temp;

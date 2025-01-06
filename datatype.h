@@ -7,6 +7,7 @@ typedef struct Category{
 }Category;
 typedef struct Product{
 	int id;
+	int idCategory;
 	char nameProduct[50];
 	int quantity;
 	int price;

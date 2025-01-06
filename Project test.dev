@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000000
-UnitCount=6
+UnitCount=5
 
 [VersionInfo]
 Major=1
@@ -95,15 +95,6 @@ FileName=category.dat
 Folder=Data
 Compile=0
 Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit6]
-FileName=login.txt
-Folder=Data
-Compile=1
-Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
